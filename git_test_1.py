@@ -4,15 +4,12 @@ import pygame
 
 def draw(screen, wid, height):
     screen.fill((0, 0, 0))
-    pygame.draw.line(screen, (255, 255, 255), (0, 0),
-                     (wid - 1, height - 1), width=5)
-    pygame.draw.line(screen, (255, 255, 255), (wid - 1, 0),
-                     (0, height - 1), width=5)
+    pygame.draw.rect(screen, '#ff0000', (1, 1, wid - 2, height - 2))
 
 
 def main(wid, height):
     pygame.init()
-    pygame.display.set_caption('Крест')
+    pygame.display.set_caption('Прямоугольник')
 
     size = wid, height
     screen = pygame.display.set_mode(size)
