@@ -3,18 +3,23 @@ import pygame
 
 
 def draw(screen, wid, height):
-    screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, '#ff0000', (1, 1, wid - 2, height - 2))
+    screen.fill('#ffffff')
+    size = wid // side
+    for i in range(side):
+        for j in range(side):
+            if (i + j) % 2 == 0:
+                pygame.draw.rect(screen, '#000000',
+                                 (i * size, wid - (j + 1) * size, size, size))
 
 
-def main(wid, height):
+def main(wid, side):
     pygame.init()
-    pygame.display.set_caption('Прямоугольник')
+    pygame.display.set_caption('Шахматная клетка')
 
-    size = wid, height
+    size = wid, wid
     screen = pygame.display.set_mode(size)
 
-    draw(screen, wid, height)
+    draw(screen, wid, side)
     pygame.display.flip()
 
     while pygame.event.wait().type != pygame.QUIT:
@@ -23,7 +28,8 @@ def main(wid, height):
 
 
 try:
-    w, h = map(int, input().split())
-    main(w, h)
+    wid, side = map(int, input().split())
+    assert wid % side == 0
+    main(wid, side)
 except:
     print('Неправильный формат ввода')
