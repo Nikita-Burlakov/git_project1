@@ -2,7 +2,7 @@ import pygame
 #import random
 
 
-def draw(screen, wid, height):
+def draw(screen, wid, side):
     screen.fill('#ffffff')
     size = wid // side
     for i in range(side):
