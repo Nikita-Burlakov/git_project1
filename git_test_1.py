@@ -1,20 +1,25 @@
 import pygame
-#import random
 
 
-def draw(screen, wid, height):
+colors = ['#0000ff', '#ff0000', '#00ff00']
+
+
+def draw(screen, wid, count):
     screen.fill((0, 0, 0))
-    pygame.draw.rect(screen, '#ff0000', (1, 1, wid - 2, height - 2))
+    center = wid * count, wid * count
+    while count > 0:
+        pygame.draw.circle(screen, colors[count % 3], center, wid * count)
+        count -= 1
 
 
-def main(wid, height):
+def main(wid, count):
     pygame.init()
-    pygame.display.set_caption('Прямоугольник')
+    pygame.display.set_caption('Мишень')
 
-    size = wid, height
+    size = wid * count * 2, wid * count * 2
     screen = pygame.display.set_mode(size)
 
-    draw(screen, wid, height)
+    draw(screen, wid, count)
     pygame.display.flip()
 
     while pygame.event.wait().type != pygame.QUIT:
@@ -23,7 +28,7 @@ def main(wid, height):
 
 
 try:
-    w, h = map(int, input().split())
-    main(w, h)
+    wid, count = map(int, input().split())
+    main(wid, count)
 except:
     print('Неправильный формат ввода')
