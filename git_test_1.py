@@ -2,34 +2,46 @@ import pygame
 #import random
 
 
-def draw(screen, wid, side):
-    screen.fill('#ffffff')
-    size = wid // side
-    for i in range(side):
-        for j in range(side):
-            if (i + j) % 2 == 0:
-                pygame.draw.rect(screen, '#000000',
-                                 (i * size, wid - (j + 1) * size, size, size))
+def draw(screen, wid, hue):
+    screen.fill('#000000')
+    if wid == 0:
+        return
+    side = wid // 4
+    color = pygame.Color(0, 0, 0)
+    #
+    color.hsva = (hue, 100, 100)
+    top = [(150 - 3 * side, 150 - side),
+           (150 - side, 150 - 3 * side),
+           (149 + 3 * side, 150 - 3 * side),
+           (149 + side, 150 - side)]
+    pygame.draw.polygon(screen, color, top)
+    #
+    color.hsva = (hue, 100, 50)
+    #right = [(150 - 3 * side, 150 - side),
+    #       (150 - side, 150 - 3 * side),
+    #       (149 + 3 * side, 150 - 3 * side),
+    #       (149 + side, 150 - side)]
+    #pygame.draw.polygon(screen, color, top)
 
 
-def main(wid, side):
+def main(wid, hue):
     pygame.init()
     pygame.display.set_caption('Шахматная клетка')
 
-    size = wid, wid
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode((300, 300))
 
-    draw(screen, wid, side)
-    pygame.display.flip()
+    draw(screen, wid, hue)
+
 
     while pygame.event.wait().type != pygame.QUIT:
-        pass
+        pygame.display.flip()
     pygame.quit()
 
 
 try:
-    wid, side = map(int, input().split())
-    assert wid % side == 0
-    main(wid, side)
-except:
+    wid, hue = map(int, input().split())
+    assert wid % 4 == 0 and wid <= 100
+    assert 0 <= hue <= 360
+    main(wid, hue)
+except AssertionError:
     print('Неправильный формат ввода')
